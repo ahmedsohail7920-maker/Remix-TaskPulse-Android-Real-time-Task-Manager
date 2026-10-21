@@ -1,0 +1,8 @@
+{
+  "name": "Remix TaskPulse Android \u0026 Real-time Task Manager",
+  "description": "Android task management application with real-time Firebase sync, offline-first SQLite/IndexedDB architecture, push notification reminders, clean dark-mode UI, APK build suite, and comprehensive REST API \u0026 security documentation.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

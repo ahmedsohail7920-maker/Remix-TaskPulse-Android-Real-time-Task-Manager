@@ -1,0 +1,146 @@
+{
+  "entities": {
+    "Task": {
+      "title": "Task",
+      "description": "A task item managed by a user with offline sync metadata and push notification schedule.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "userId": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 250
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 2000
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["low", "medium", "high", "urgent"]
+        },
+        "status": {
+          "type": "string",
+          "enum": ["todo", "in_progress", "completed", "archived"]
+        },
+        "category": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "dueDate": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "reminderTime": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "isCompleted": {
+          "type": "boolean"
+        },
+        "completedAt": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "tags": {
+          "type": "array"
+        },
+        "subtasks": {
+          "type": "array"
+        },
+        "syncVersion": {
+          "type": "number"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["id", "userId", "title", "priority", "status", "isCompleted"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "A task category folder for grouping tasks.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "userId": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "color": {
+          "type": "string",
+          "maxLength": 32
+        },
+        "icon": {
+          "type": "string",
+          "maxLength": 32
+        }
+      },
+      "required": ["id", "userId", "name", "color"]
+    },
+    "NotificationToken": {
+      "title": "NotificationToken",
+      "description": "FCM device registration token for push notification reminders.",
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "maxLength": 512
+        },
+        "platform": {
+          "type": "string",
+          "enum": ["android", "web"]
+        },
+        "deviceModel": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["token", "platform"]
+    }
+  },
+  "firestore": {
+    "/tasks/{taskId}": {
+      "schema": {
+        "$ref": "#/entities/Task"
+      },
+      "description": "Collection of tasks owned by authenticated users."
+    },
+    "/categories/{categoryId}": {
+      "schema": {
+        "$ref": "#/entities/Category"
+      },
+      "description": "Collection of custom task categories owned by authenticated users."
+    },
+    "/users/{userId}/tokens/{tokenId}": {
+      "schema": {
+        "$ref": "#/entities/NotificationToken"
+      },
+      "description": "Device push notification tokens associated with a specific user."
+    }
+  }
+}
